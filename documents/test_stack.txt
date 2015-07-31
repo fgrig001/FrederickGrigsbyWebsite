@@ -1,0 +1,39 @@
+#!/usr/bin/perl
+
+my %to;
+my %from;
+
+while( <ARGV> ){
+	if(/: from=\<(.+)\>/){
+		$from{$1}++;
+	}
+	if(/: to=\<(.+)\>/){
+		$to{$1}++;
+	}
+}
+
+# sort %from into @fromName
+my @fromName;
+foreach $name (sort { $from{$a} <=> $from{$b} } keys %from) {
+	push @fromName, $name;
+}
+
+# sort %to into @toName
+my @toName;
+foreach $name (sort { $to{$a} <=> $to{$b} } keys %to) {
+	push @toName, $name;
+}
+
+# print top 5 from @fromName 
+my $name;
+for($i=0;$i<5;$i++){
+	$name=pop @fromName;
+	print "From $name $from{$name}\n";
+}
+
+# print top 5 from @toName
+for($i=0;$i<5;$i++){
+	$name=pop @toName;
+	print "To $name $to{$name}\n";
+}
+
